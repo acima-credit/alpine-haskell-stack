@@ -1,0 +1,10 @@
+################################################################################
+# This is a minimal image containing the smallest set of packages that can run
+# a compiled Haskell binary + smallest set of system packages for development/troubleshooting
+FROM alpine:3.9
+
+RUN apk add --no-cache \
+      bash \
+      curl \
+      gmp \
+      postgresql-dev

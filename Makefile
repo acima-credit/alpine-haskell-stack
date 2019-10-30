@@ -21,35 +21,19 @@ stack_docker = $(stack) --docker
 TARGET_GHC_VERSION ?= 8.6.5
 
 ################################################################################
-# Standard build (runs in the Docker container)
-.PHONY: build
-build:
-	$(stack_docker) build $(package) \
-	--ghc-options='$(ghc_opts)'
+# Build Haskell images
 
-# Static build (runs in the Docker container)
-.PHONY: build-static
-build-static:
-	$(stack_docker) build $(package) --flag $(package):static \
-	--ghc-options='$(ghc_opts)'
+.PHONY: haskell-builder
+haskell-builder: docker-build-gmp
+	docker tag alpine-haskell-gmp:$(TARGET_GHC_VERSION) haskell-builder:$(TARGET_GHC_VERSION)
 
-# Fast build (-O0) (runs in the Docker container)
-.PHONY: build-fast
-build-fast:
-	$(stack_docker) build $(package) \
-	--ghc-options='$(ghc_opts)' \
-	--fast
+.PHONY: haskell-base
+haskell-base:
+	docker build \
+		--tag haskell-base:latest \
+		--file $(ALPINE_HASKELL_ROOT_DIR)/Dockerfile.base \
+		$(ALPINE_HASKELL_ROOT_DIR)
 
-# Clean up all build artifacts
-clean:
-	$(stack_docker) clean
-
-# Run ghcid (runs in the Docker container)
-ghcid:
-	$(stack) exec -- ghcid \
-	--command "$(stack_docker) ghci \
-			--ghci-options='-fobject-code $(ghc_opts)' \
-			--main-is $(package):$(main_exe)"
 
 ################################################################################
 # Convenience targets for building GHC locally
