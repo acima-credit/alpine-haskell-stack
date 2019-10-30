@@ -25,12 +25,15 @@ TARGET_GHC_VERSION ?= 8.6.5
 
 .PHONY: haskell-builder
 haskell-builder: docker-build-gmp
-	docker tag alpine-haskell-gmp:$(TARGET_GHC_VERSION) haskell-builder:$(TARGET_GHC_VERSION)
+	docker build \
+		--tag haskell-builder:$(TARGET_GHC_VERSION) \
+		--file $(ALPINE_HASKELL_ROOT_DIR)/Dockerfile.builder \
+	$(ALPINE_HASKELL_ROOT_DIR)
 
 .PHONY: haskell-base
 haskell-base:
 	docker build \
-		--tag haskell-base:latest \
+		--tag haskell-base:alpine \
 		--file $(ALPINE_HASKELL_ROOT_DIR)/Dockerfile.base \
 		$(ALPINE_HASKELL_ROOT_DIR)
 
