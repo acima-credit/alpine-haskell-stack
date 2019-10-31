@@ -1,7 +1,7 @@
 ################################################################################
 # This is a minimal image containing the smallest set of packages that can run
 # a compiled Haskell binary + smallest set of system packages for development/troubleshooting
-FROM alpine:3.9
+FROM alpine:3.10
 
 RUN apk add --no-cache \
       bash \
