@@ -8,8 +8,14 @@ RUN apk add --no-cache \
       gmp \
       postgresql-dev
 
-# Remediate blackduck scan issues
+# Remediate blackduck scan issues by setting minimum version bounds
 RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
       'busybox>=1.31.1' \
       'musl>=1.1.24' \
       'ncurses>=6.1'
+
+
+# Remediate blackduck scan issues by removing unused packages
+RUN apk del \
+      db \
+      openldap
