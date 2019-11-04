@@ -3,8 +3,13 @@
 # a compiled Haskell binary + smallest set of system packages for development/troubleshooting
 FROM alpine:3.10
 
+# Packages needed to run haskell binaries
 RUN apk add --no-cache \
-      bash \
-      curl \
       gmp \
       postgresql-dev
+
+# Remediate blackduck scan issues
+RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
+      'busybox>=1.31.1' \
+      'musl>=1.1.24' \
+      'ncurses>=6.1'
