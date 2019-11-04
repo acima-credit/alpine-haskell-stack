@@ -4,9 +4,15 @@
 FROM alpine:3.10
 
 # Packages needed to run haskell binaries
+# Determined using `ldd` on compiled binaries
 RUN apk add --no-cache \
+      cyrus-sasl \
       gmp \
-      postgresql-dev
+      libldap \
+      libpq \
+      musl \
+      openssl \
+      zlib
 
 # Remediate blackduck scan issues by setting minimum version bounds
 RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
@@ -14,8 +20,6 @@ RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
       'musl>=1.1.24' \
       'ncurses>=6.1'
 
-
 # Remediate blackduck scan issues by removing unused packages
 RUN apk del \
-      db \
-      openldap
+      db
