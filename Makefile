@@ -30,9 +30,9 @@ haskell-builder: docker-build-gmp
 		--file $(ALPINE_HASKELL_ROOT_DIR)/Dockerfile.builder \
 	$(ALPINE_HASKELL_ROOT_DIR)
 
-.PHONY: haskell-builder-push
-haskell-builder-push:
-	docker tag haskell-base:alpine 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-builder:ghc-$(TARGET_GHC_VERSION)
+.PHONY: haskell-builder-publish
+haskell-builder-publish:
+	docker tag haskell-builder:ghc-$(TARGET_GHC_VERSION) 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-builder:ghc-$(TARGET_GHC_VERSION)
 	docker push 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-builder:ghc-$(TARGET_GHC_VERSION)
 
 .PHONY: haskell-base
