@@ -20,8 +20,8 @@ ENV GHCUP_INSTALL_BASE_PREFIX=/
 ENV PATH=/.ghcup/bin:$PATH
 
 # Use the latest version of ghcup (at the time of writing)
-ENV GHCUP_VERSION=0.0.7
-ENV GHCUP_SHA256="b4b200d896eb45b56c89d0cfadfcf544a24759a6ffac029982821cc96b2faedb  ghcup"
+ENV GHCUP_VERSION=0.0.8
+ENV GHCUP_SHA256="e09669752067dc1268bff754237e91c4dee9b35bc4e20c280faafeef9c21ea74  ghcup"
 
 # Install the basic required dependencies to run 'ghcup' and 'stack'
 RUN apk upgrade --no-cache &&\
@@ -93,8 +93,7 @@ RUN echo "Compiling and installing GHC" &&\
       ghcup -v compile -j $(nproc) -c /tmp/build.mk ${GHC_VERSION} ghc-8.4.3 &&\
     rm /tmp/build.mk &&\
     echo "Uninstalling GHC bootstrapping compiler" &&\
-    apk del ghc &&\
-    ghcup set ${GHC_VERSION}
+    apk del ghc
 
 ################################################################################
 # Intermediate layer that assembles 'stack' tooling
@@ -130,5 +129,4 @@ COPY --from=build-tooling /usr/bin/stack /usr/bin/stack
 # NOTE: 'stack --docker' needs bash + usermod/groupmod (from shadow)
 RUN apk add --no-cache bash shadow openssh-client tar
 
-RUN ghcup set ${GHC_VERSION} &&\
-    stack config set system-ghc --global true
+RUN stack config set system-ghc --global true
