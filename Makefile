@@ -18,7 +18,7 @@ stack      = $(stack_yaml) stack
 stack_docker = $(stack) --docker
 
 # GHC version to build
-TARGET_GHC_VERSION ?= 8.6.5
+TARGET_GHC_VERSION ?= 8.10.7
 
 ################################################################################
 # Build Haskell images
@@ -45,8 +45,8 @@ haskell-base:
 
 .PHONY : haskell-base-publish
 haskell-base-publish:
-	docker tag haskell-base:alpine 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-base:alpine
-	docker push 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-base:alpine
+	docker tag haskell-base:alpine 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-base:alpine-ghc-8.10.7
+	docker push 315174919334.dkr.ecr.us-east-2.amazonaws.com/haskell-base:alpine-ghc-8.10.7
 
 
 ################################################################################

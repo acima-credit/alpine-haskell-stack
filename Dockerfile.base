@@ -1,7 +1,7 @@
 ################################################################################
 # This is a minimal image containing the smallest set of packages that can run
 # a compiled Haskell binary + smallest set of system packages for development/troubleshooting
-FROM alpine:3.10
+FROM alpine:3.16.2
 
 # Packages needed to run haskell binaries
 # Determined using `ldd` on compiled binaries

@@ -6,4 +6,5 @@ FROM alpine-haskell-gmp:${GHC_VERSION}
 
 RUN apk add --no-cache \
       postgresql-dev \
+      postgresql \
       zlib-dev
